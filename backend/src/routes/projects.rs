@@ -1,8 +1,5 @@
-use std::fmt::Debug;
-
 use crate::{
-    models::{ProjectModel, TodoModel, UserModel},
-    requestSchema::{CreateProject, CreateTodo, CreateUser},
+    models::res_models::ProjectModel, 
     DbPool,
 };
 use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
@@ -13,7 +10,7 @@ pub async fn user_projects(path: web::Path<i32>, data: web::Data<DbPool>) -> imp
     let id = path.into_inner();
     let user_projects = match sqlx::query_as!(ProjectModel, 
         "
-        SELECT p.project_id, p.project_name
+        SELECT p.project_id, p.project_name, u.user_id
         FROM projects p
         INNER JOIN users u on p.user_id = u.user_id
         WHERE u.user_id = $1 
@@ -23,37 +20,36 @@ pub async fn user_projects(path: web::Path<i32>, data: web::Data<DbPool>) -> imp
         .await {
             Ok(data) => data, 
             Err(_) => {
-                eprint!("Database Error!");
                 vec![]
             },
         };
-
     let res = json!(&user_projects);
 
     return HttpResponse::Ok().json(res);
 }
 
-#[get("/api/v1/projects/{project_id}/todos")]
-pub async fn project_todos(path: web::Path<i32>, data: web::Data<DbPool>) -> impl Responder {
-    let id = path.into_inner();
-    let project_todos = match sqlx::query_as!(TodoModel, 
+#[get("/api/v1/users/{user_id}/projects/{project_id}")]
+pub async fn user_project(path: web::Path<Vec<i32>>, data: web::Data<DbPool>) -> impl Responder {
+    let ids: Vec<i32> = path.into_inner();
+    let user_id = ids[0];
+    let project_id = ids[1];
+
+    let project = match sqlx::query_as!(ProjectModel, 
         "
-        SELECT *
-        FROM todos t
-        NATURAL JOIN projects p
-        WHERE p.project_id = $1 
+        SELECT p.project_id, p.project_name, u.user_id
+        FROM projects p
+        NATURAL JOIN users u 
+        WHERE project_id = $1 AND u.user_id = $2
         ", 
-        id)
-        .fetch_all(&data.0)
+        project_id, user_id)
+        .fetch_one(&data.0)
         .await {
-            Ok(data) => data, 
+            Ok(data) => json!(data), 
             Err(_) => {
-                eprint!("Database Error!");
-                vec![]
+                json!({ "message": "user or project id wrong or not found"})
             },
         };
 
-    let res = json!(&project_todos);
-
-    return HttpResponse::Ok().json(res);
+    return HttpResponse::Ok().json(project);
 }
+

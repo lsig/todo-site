@@ -1,37 +1,44 @@
-
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
-mod database;
+use dotenvy::dotenv;
+use sqlx::{postgres::PgPoolOptions, Pool, Postgres, PgPool};
 
+mod models;
+mod routes;
+
+pub struct DbPool(Pool<Postgres>);
 
 #[get("/ping")]
-async fn hello() -> impl Responder {
+async fn ping() -> impl Responder {
     HttpResponse::Ok().body("Pong!")
-}
-//
-// #[get("/api/v1/projects/{user_id}")]
-// async fn todos() -> impl Responder {
-//     HttpResponse::Ok().body("Hello");
-// }
-
-#[post("/echo")]
-async fn echo(req_body: String) -> impl Responder {
-    HttpResponse::Ok().body(req_body)
-}
-
-async fn manual_hello() -> impl Responder {
-    HttpResponse::Ok().body("Hey there!")
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let pool = database::db_pool();
+    dotenv().expect(".env not found");
+    
+    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let pool = match PgPoolOptions::new()
+        .max_connections(5)
+        .connect(&database_url).await
+    {
+        Ok(pool) => {
+                println!("Connection to database succesful");
+                pool
+            }
+        Err(e) => {
+                println!("failed to connect to database {:?}", e);
+                std::process::exit(1);
+            }
+    };
 
-    HttpServer::new(|| {
+
+    HttpServer::new(move || {
         App::new()
-            .service(hello)
-            .service(echo)
-            .app_data(web::Data::new(pool.clone()))
-            .route("/hey", web::get().to(manual_hello))
+            .service(ping)
+            .service(routes::projects::user_projects)
+            .service(routes::projects::user_project)
+            .service(routes::todos::project_todos)
+            .app_data(web::Data::new(DbPool(pool.clone())))
     })
     .bind(("127.0.0.1", 8080))?
     .run()

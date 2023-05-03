@@ -10,6 +10,7 @@ pub struct UserModel {
 #[derive(Debug, Deserialize, Serialize, sqlx::FromRow)]
 pub struct ProjectModel {
     pub project_id: i32,
+    pub user_id: i32,
     pub project_name: String,
 }
 
