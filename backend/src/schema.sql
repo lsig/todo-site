@@ -9,7 +9,7 @@ CREATE TABLE
 CREATE TABLE
   projects (
     project_id SERIAL,
-    name VARCHAR(20) NOT NULL,
+    project_name VARCHAR(20) NOT NULL,
     user_id INT NOT NULL,
     PRIMARY KEY (project_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -39,7 +39,7 @@ VALUES
 
 -- Create the projects for user 1
 INSERT INTO
-  projects (name, user_id)
+  projects (project_name, user_id)
 VALUES
   ('Project 1', 1),
   ('Project 2', 1),
@@ -47,7 +47,7 @@ VALUES
 
 -- Create the projects for user 2
 INSERT INTO
-  projects (name, user_id)
+  projects (project_name, user_id)
 VALUES
   ('Project 1', 2),
   ('Project 2', 2),
@@ -55,7 +55,7 @@ VALUES
 
 -- Create the projects for user 3
 INSERT INTO
-  projects (name, user_id)
+  projects (project_name, user_id)
 VALUES
   ('Project 1', 3),
   ('Project 2', 3),
