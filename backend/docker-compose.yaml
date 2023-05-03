@@ -11,7 +11,7 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "6432:5432"
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
