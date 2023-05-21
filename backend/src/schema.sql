@@ -25,7 +25,7 @@ CREATE TABLE
     completed BOOLEAN DEFAULT false,
     due_date DATE,
     project_id INT NOT NULL,
-    PRIMARY KEY (todo_id),
+    PRIMARY KEY (project_id, todo_id),
     FOREIGN KEY (project_id) REFERENCES projects (project_id)
   );
 

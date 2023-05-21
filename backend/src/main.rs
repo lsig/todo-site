@@ -38,6 +38,8 @@ async fn main() -> std::io::Result<()> {
             .service(routes::projects::user_projects)
             .service(routes::projects::user_project)
             .service(routes::todos::project_todos)
+            .service(routes::users::users)
+            .service(routes::users::user)
             .app_data(web::Data::new(DbPool(pool.clone())))
     })
     .bind(("127.0.0.1", 8080))?

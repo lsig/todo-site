@@ -21,7 +21,6 @@ pub async fn project_todos(path: web::Path<i32>, data: web::Data<DbPool>) -> imp
         .await {
             Ok(data) => data, 
             Err(_) => {
-                eprint!("Database Error!");
                 vec![]
             },
         };
