@@ -1,22 +1,24 @@
 use crate::{
-    models::res_models::TodoModel,
+    models::{res_models::TodoModel, req_models::CreateTodo},
     DbPool,
 };
 
-use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
+use actix_web::{delete, get, patch, post, web, HttpResponse, Responder, http::StatusCode};
 use serde_json::json;
 
-#[get("/api/v1/projects/{project_id}/todos")]
-pub async fn project_todos(path: web::Path<i32>, data: web::Data<DbPool>) -> impl Responder {
-    let id = path.into_inner();
+#[get("/api/v1/users/{user_id}/projects/{project_id}/todos")]
+pub async fn get_project_todos(path: web::Path<Vec<i32>>, data: web::Data<DbPool>) -> impl Responder {
+    let ids: Vec<i32> = path.into_inner();
+    let user_id = ids[0];
+    let project_id = ids[1];
     let project_todos = match sqlx::query_as!(TodoModel, 
         "
-        SELECT *
-        FROM todos t
-        NATURAL JOIN projects p
-        WHERE p.project_id = $1 
+        SELECT user_id, project_id, todo_id, title, description, priority, completed, due_date
+        FROM Todos t
+        NATURAL JOIN Projects p
+        WHERE user_id = $1 AND project_id = $2
         ", 
-        id)
+        user_id, project_id)
         .fetch_all(&data.0)
         .await {
             Ok(data) => data, 
@@ -29,3 +31,64 @@ pub async fn project_todos(path: web::Path<i32>, data: web::Data<DbPool>) -> imp
 
     return HttpResponse::Ok().json(res);
 }
+
+#[get("/api/v1/users/{user_id}/projects/{project_id}/todos/{todo_id}")]
+pub async fn get_todo(path: web::Path<Vec<i32>>, data: web::Data<DbPool>) -> impl Responder {
+    let ids: Vec<i32> = path.into_inner();
+    let user_id = ids[0];
+    let project_id = ids[1];
+    let todo_id = ids[2];
+
+    let todo = match sqlx::query_as!(TodoModel, 
+        "
+        SELECT user_id, project_id, todo_id, title, description, priority, completed, due_date
+        FROM Todos t
+        NATURAL JOIN Projects p
+        WHERE user_id = $1 AND project_id = $2 AND todo_id = $3
+        ", 
+        user_id, project_id, todo_id)
+        .fetch_one(&data.0)
+        .await {
+            Ok(data) => json!(data), 
+            Err(_) => {
+                json!({ "message": "todo or project id wrong or not found"})
+            },
+        };
+
+    return HttpResponse::Ok().json(todo);
+}
+
+#[post("/api/v1/users/{user_id}/projects/{project_id}/todos")]
+pub async fn post_todo(path: web::Path<Vec<i32>>, body: web::Json<CreateTodo>, data: web::Data<DbPool>) -> impl Responder {
+    let ids = path.into_inner();
+
+    let user_id = ids[0];
+    let project_id = ids[1];
+
+    let insert_query = 
+        sqlx::query_as!(TodoModel, "INSERT INTO todos (title, description, priority, completed, due_date, project_id, user_id) 
+                      VALUES ($1, $2, $3, $4, $5, $6, $7)
+                      RETURNING todo_id, title, description, priority, completed, due_date, project_id, user_id",
+        body.title,
+        body.description,
+        body.priority,
+        body.completed,
+        body.due_date,
+        project_id,
+        user_id)
+        .fetch_one(&data.0)
+        .await;
+
+
+    let todo = match insert_query {
+        Ok(data) => json!(data),
+        Err(e) => {
+            return HttpResponse::InternalServerError()
+                .json(json!({"status": "error","message": format!("{:?}", e)}));
+        }
+    };
+
+    return HttpResponse::Created().json(todo);
+}
+
+
