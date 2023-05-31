@@ -22,7 +22,6 @@ pub struct TodoModel {
     pub priority: i32,
     pub completed: Option<bool>,
     pub due_date: Option<chrono::NaiveDate>,
-    pub project_name: String,
     pub project_id: i32,
     pub user_id: i32,
 }
