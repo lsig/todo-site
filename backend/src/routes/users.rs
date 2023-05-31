@@ -10,7 +10,7 @@ pub async fn users(data: web::Data<DbPool>) -> impl Responder {
     let users = match sqlx::query_as!(UserModel, 
         "
         SELECT * 
-        FROM users
+        FROM Users
         " 
         )
         .fetch_all(&data.0)
@@ -31,7 +31,7 @@ pub async fn user(path: web::Path<i32>, data: web::Data<DbPool>) -> impl Respond
     let user = match sqlx::query_as!(UserModel, 
         "
         SELECT * 
-        FROM users
+        FROM Users
         WHERE user_id = $1
         ", 
         id)

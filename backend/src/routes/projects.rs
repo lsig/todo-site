@@ -11,8 +11,8 @@ pub async fn user_projects(path: web::Path<i32>, data: web::Data<DbPool>) -> imp
     let user_projects = match sqlx::query_as!(ProjectModel, 
         "
         SELECT p.project_id, p.project_name, u.user_id
-        FROM projects p
-        INNER JOIN users u on p.user_id = u.user_id
+        FROM Projects p
+        INNER JOIN Users u on p.user_id = u.user_id
         WHERE u.user_id = $1 
         ", 
         id)
@@ -37,8 +37,8 @@ pub async fn user_project(path: web::Path<Vec<i32>>, data: web::Data<DbPool>) ->
     let project = match sqlx::query_as!(ProjectModel, 
         "
         SELECT p.project_id, p.project_name, u.user_id
-        FROM projects p
-        NATURAL JOIN users u 
+        FROM Projects p
+        NATURAL JOIN Users u 
         WHERE project_id = $1 AND u.user_id = $2
         ", 
         project_id, user_id)
