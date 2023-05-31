@@ -1,3 +1,4 @@
+use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -19,6 +20,14 @@ pub struct CreateTodo {
     pub priority: i32,
     pub completed: bool,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub due_date: Option<chrono::DateTime<chrono::Utc>>,
-    pub project_id: i32,
+    pub due_date: Option<chrono::NaiveDate>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct UpdateTodo {
+    pub title: Option<String>,
+    pub description: Option<String>,
+    pub priority: Option<i32>,
+    pub completed: Option<bool>,
+    pub due_date: Option<chrono::NaiveDate>,
 }
