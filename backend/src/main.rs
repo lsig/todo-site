@@ -47,6 +47,7 @@ async fn main() -> std::io::Result<()> {
             .service(routes::todos::get_todo)
             .service(routes::todos::post_todo)
             .service(routes::todos::update_todo)
+            .service(routes::todos::delete_todo)
             .app_data(web::Data::new(DbPool(pool.clone())))
     })
     .bind(("127.0.0.1", 8080))?

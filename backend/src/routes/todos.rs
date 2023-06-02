@@ -160,8 +160,7 @@ pub async fn update_todo(path: web::Path<Vec<i32>>, body: web::Json<UpdateTodo>,
             todo_due_date,
             user_id,
             project_id,
-            todo_id
-            )
+            todo_id)
             .fetch_one(&data.0)
             .await;
 
@@ -174,6 +173,36 @@ pub async fn update_todo(path: web::Path<Vec<i32>>, body: web::Json<UpdateTodo>,
     };
 
   return HttpResponse::Ok().json(newly_updated_todo);
+}
+
+#[delete("/api/v1/users/{user_id}/projects/{project_id}/todos/{todo_id}")]
+pub async fn delete_todo(path: web::Path<Vec<i32>>, data: web::Data<DbPool>) -> impl Responder {
+    let ids = path.into_inner();
+    let user_id = ids[0];
+    let project_id = ids[1];
+    let todo_id = ids[2];
+
+    let query_result = sqlx::query!("DELETE From Todos WHERE user_id = $1 AND project_id = $2 AND todo_id = $3",
+                user_id,
+                project_id,
+                todo_id)
+                .execute(&data.0)    
+                .await;
+
+    match query_result {
+        Ok(result) => {
+            if result.rows_affected() == 0 {
+                let message = format!("Todo with ID: {} not found", todo_id);
+                return HttpResponse::NotFound().json(json!({"status": "fail","message": message}));
+            } else {
+                return HttpResponse::NoContent().finish();
+            }
+        }
+        Err(e) => {
+            let message = format!("Internal server error: {}", e);
+            return HttpResponse::InternalServerError().json(json!({"status": "error","message": message}));
+        }
+    }
 }
 
 
