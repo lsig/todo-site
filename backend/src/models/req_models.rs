@@ -7,11 +7,6 @@ pub struct CreateUser {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct UpdateUser {
-    pub password: Option<String>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
 pub struct CreateProject {
     pub project_name: String,
 }

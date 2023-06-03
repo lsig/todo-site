@@ -1,8 +1,8 @@
 use crate::{
-    models::{res_models::UserModel, req_models::CreateUser}, 
+    models::{res_models::{UserModel, LoginModel}, req_models::CreateUser}, 
     DbPool,
 };
-use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
+use actix_web::{get, post, web, HttpResponse, Responder};
 use serde_json::json;
 
 #[get("/api/v1/users")]
@@ -70,5 +70,37 @@ pub async fn create_user(body: web::Json<CreateUser>, data: web::Data<DbPool>) -
     };
 
     return HttpResponse::Created().json(new_user);
+}
+
+#[post("/api/v1/login")]
+pub async fn login_user(body: web::Json<CreateUser>, data: web::Data<DbPool>) -> impl Responder {
+
+    let insert_query = 
+        sqlx::query_as!(LoginModel, 
+            "
+            SELECT user_id FROM Users 
+            WHERE username = $1 AND password = $2
+             ",
+        body.username,
+        body.password
+        )
+        .fetch_one(&data.0)
+        .await;
+
+
+    let new_user = match insert_query {
+        Ok(data) => json!(data),
+        Err(sqlx::Error::RowNotFound) => {
+                return HttpResponse::NotFound().json(
+                    json!({"status": "fail","message": format!("Username or password wrong")}),
+                );
+        },
+        Err(e) => {
+            return HttpResponse::InternalServerError()
+                .json(json!({"status": "error","message": format!("{:?}", e)}));
+        }
+    };
+
+    return HttpResponse::Ok().json(new_user);
 }
 
