@@ -1,5 +1,5 @@
 use crate::{
-    models::{res_models::ProjectModel, req_models::CreateProject}, 
+    models::{res_models::ProjectModel, req_models::CreateProject, req_models::UpdateProject}, 
     DbPool,
 };
 use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
@@ -45,9 +45,15 @@ pub async fn user_project(path: web::Path<Vec<i32>>, data: web::Data<DbPool>) ->
         .fetch_one(&data.0)
         .await {
             Ok(data) => json!(data), 
-            Err(_) => {
-                json!({ "message": "user or project id wrong or not found"})
-            },
+            Err(sqlx::Error::RowNotFound) => {
+                return HttpResponse::NotFound().json(
+                    json!({"status": "fail","message": format!("Project with ID: {} not found", project_id)}),
+                );
+            }
+            Err(e) => {
+                return HttpResponse::InternalServerError()
+                    .json(json!({"status": "error","message": format!("{:?}", e)}));
+            }
         };
 
     return HttpResponse::Ok().json(project);
@@ -77,6 +83,62 @@ pub async fn create_project(path: web::Path<i32>, body: web::Json<CreateProject>
     };
 
     return HttpResponse::Created().json(project);
+}
+
+#[patch("/api/v1/users/{user_id}/projects/{project_id}")]
+pub async fn update_project(path: web::Path<Vec<i32>>, body: web::Json<UpdateProject>, data: web::Data<DbPool>) -> impl Responder {
+    let ids = path.into_inner();
+
+    let user_id = ids[0];
+    let project_id = ids[1];
+
+    let query_result = sqlx::query_as!(ProjectModel,
+                "SELECT * FROM Projects 
+                 WHERE user_id = $1 AND project_id = $2",
+            user_id, 
+            project_id)
+            .fetch_one(&data.0) 
+            .await;
+
+    let project = match query_result {
+        Ok(data) => data,
+        Err(sqlx::Error::RowNotFound) => {
+            return HttpResponse::NotFound().json(
+                json!({"status": "fail","message": format!("Project with ID: {} not found", project_id)}),
+            );
+        }
+        Err(e) => {
+            return HttpResponse::InternalServerError()
+                .json(json!({"status": "error","message": format!("{:?}", e)}));
+        }
+    };
+
+    let project_name = match &body.project_name {
+        Some(name) => name.to_owned(),
+        None => project.project_name
+    };
+        
+    let updated_project = sqlx::query_as!(ProjectModel, 
+            "
+            UPDATE Projects SET project_name = $1
+            WHERE user_id = $2 AND project_id = $3
+            RETURNING user_id, project_id, project_name
+            ",
+            project_name,
+            user_id,
+            project_id)
+            .fetch_one(&data.0)
+            .await;
+
+    let newly_updated_project = match updated_project {
+        Ok(data) => json!(data),
+        Err(e) => {
+            return HttpResponse::InternalServerError()
+                .json(json!({"status": "error","message": format!("{:?}", e)}));
+        }
+    };
+
+  return HttpResponse::Ok().json(newly_updated_project);
 }
 
 

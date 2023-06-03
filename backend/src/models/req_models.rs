@@ -13,6 +13,11 @@ pub struct CreateProject {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct UpdateProject {
+    pub project_name: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct CreateTodo {
     pub title: String,
     #[serde(skip_serializing_if = "Option::is_none")]
