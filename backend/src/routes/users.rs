@@ -1,12 +1,12 @@
 use crate::{
-    models::res_models::UserModel, 
+    models::{res_models::UserModel, req_models::CreateUser}, 
     DbPool,
 };
 use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
 use serde_json::json;
 
 #[get("/api/v1/users")]
-pub async fn users(data: web::Data<DbPool>) -> impl Responder {
+pub async fn get_users(data: web::Data<DbPool>) -> impl Responder {
     let users = match sqlx::query_as!(UserModel, 
         "
         SELECT * 
@@ -26,7 +26,7 @@ pub async fn users(data: web::Data<DbPool>) -> impl Responder {
 }
 
 #[get("/api/v1/users/{user_id}")]
-pub async fn user(path: web::Path<i32>, data: web::Data<DbPool>) -> impl Responder {
+pub async fn get_user(path: web::Path<i32>, data: web::Data<DbPool>) -> impl Responder {
     let id = path.into_inner();
     let user = match sqlx::query_as!(UserModel, 
         "
@@ -44,5 +44,31 @@ pub async fn user(path: web::Path<i32>, data: web::Data<DbPool>) -> impl Respond
         };
 
     return HttpResponse::Ok().json(user);
+}
+
+#[post("/api/v1/users")]
+pub async fn create_user(body: web::Json<CreateUser>, data: web::Data<DbPool>) -> impl Responder {
+
+    let insert_query = 
+        sqlx::query_as!(UserModel, 
+            "INSERT INTO Users (username, password) 
+             VALUES ($1, $2)
+             RETURNING user_id, username, password",
+        body.username,
+        body.password
+        )
+        .fetch_one(&data.0)
+        .await;
+
+
+    let new_user = match insert_query {
+        Ok(data) => json!(data),
+        Err(e) => {
+            return HttpResponse::InternalServerError()
+                .json(json!({"status": "error","message": format!("{:?}", e)}));
+        }
+    };
+
+    return HttpResponse::Created().json(new_user);
 }
 

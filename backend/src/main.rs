@@ -39,8 +39,9 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .service(ping)
-            .service(routes::users::users)
-            .service(routes::users::user)
+            .service(routes::users::get_users)
+            .service(routes::users::get_user)
+            .service(routes::users::create_user)
             .service(routes::projects::user_projects)
             .service(routes::projects::user_project)
             .service(routes::projects::create_project)
