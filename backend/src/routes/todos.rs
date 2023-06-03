@@ -67,7 +67,7 @@ pub async fn post_todo(path: web::Path<Vec<i32>>, body: web::Json<CreateTodo>, d
 
     let insert_query = 
         sqlx::query_as!(TodoModel, 
-            "INSERT INTO todos (title, description, priority, completed, due_date, project_id, user_id) 
+            "INSERT INTO Todos (title, description, priority, completed, due_date, project_id, user_id) 
              VALUES ($1, $2, $3, $4, $5, $6, $7)
              RETURNING todo_id, title, description, priority, completed, due_date, project_id, user_id",
         body.title,
