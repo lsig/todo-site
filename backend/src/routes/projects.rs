@@ -141,4 +141,31 @@ pub async fn update_project(path: web::Path<Vec<i32>>, body: web::Json<UpdatePro
   return HttpResponse::Ok().json(newly_updated_project);
 }
 
+#[delete("/api/v1/users/{user_id}/projects/{project_id}")]
+pub async fn delete_project(path: web::Path<Vec<i32>>, data: web::Data<DbPool>) -> impl Responder {
+    let ids = path.into_inner();
+    let user_id = ids[0];
+    let project_id = ids[1];
+
+    let query_result = sqlx::query!("DELETE From Projects WHERE user_id = $1 AND project_id = $2",
+                user_id,
+                project_id)
+                .execute(&data.0)    
+                .await;
+
+    match query_result {
+        Ok(result) => {
+            if result.rows_affected() == 0 {
+                let message = format!("Project with ID: {} not found", project_id);
+                return HttpResponse::NotFound().json(json!({"status": "fail","message": message}));
+            } else {
+                return HttpResponse::NoContent().finish();
+            }
+        }
+        Err(e) => {
+            let message = format!("Internal server error: {}", e);
+            return HttpResponse::InternalServerError().json(json!({"status": "error","message": message}));
+        }
+    }
+}
 
