@@ -1,6 +1,6 @@
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 use dotenvy::dotenv;
-use sqlx::{postgres::PgPoolOptions, Pool, Postgres, PgPool};
+use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 
 mod models;
 mod routes;
@@ -31,9 +31,9 @@ async fn main() -> std::io::Result<()> {
             }
     };
 
-    let migration = match sqlx::migrate!().run(&pool).await{
-        Ok(mig) => println!("Migration succesful"),
-        Err(e) => println!("Migration failed")
+    let _migration = match sqlx::migrate!().run(&pool).await{
+        Ok(_mig) => println!("Migration succesful"),
+        Err(_) => println!("Migration failed")
     }; 
 
     HttpServer::new(move || {
@@ -55,7 +55,7 @@ async fn main() -> std::io::Result<()> {
             .service(routes::todos::delete_todo)
             .app_data(web::Data::new(DbPool(pool.clone())))
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("0.0.0.0", 8080))?
     .run()
     .await
 }

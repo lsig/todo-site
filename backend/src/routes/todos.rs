@@ -3,7 +3,7 @@ use crate::{
     DbPool,
 };
 
-use actix_web::{delete, get, patch, post, web, HttpResponse, Responder, http::StatusCode};
+use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
 use serde_json::json;
 
 #[get("/api/v1/users/{user_id}/projects/{project_id}/todos")]
