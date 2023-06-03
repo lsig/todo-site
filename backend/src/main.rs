@@ -43,6 +43,7 @@ async fn main() -> std::io::Result<()> {
             .service(routes::users::user)
             .service(routes::projects::user_projects)
             .service(routes::projects::user_project)
+            .service(routes::projects::create_project)
             .service(routes::todos::get_project_todos)
             .service(routes::todos::get_todo)
             .service(routes::todos::post_todo)

@@ -7,9 +7,9 @@ pub struct CreateUser {
     pub password: String,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct CreateProject {
-    name: String,
-    user_id: i32,
+    pub project_name: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

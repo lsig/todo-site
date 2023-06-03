@@ -1,5 +1,5 @@
 use crate::{
-    models::res_models::ProjectModel, 
+    models::{res_models::ProjectModel, req_models::CreateProject}, 
     DbPool,
 };
 use actix_web::{delete, get, patch, post, web, HttpResponse, Responder};
@@ -52,4 +52,31 @@ pub async fn user_project(path: web::Path<Vec<i32>>, data: web::Data<DbPool>) ->
 
     return HttpResponse::Ok().json(project);
 }
+
+#[post("/api/v1/users/{user_id}/projects")]
+pub async fn create_project(path: web::Path<i32>, body: web::Json<CreateProject>, data: web::Data<DbPool>) -> impl Responder {
+    let id = path.into_inner();
+
+    let insert_query = 
+        sqlx::query_as!(ProjectModel, 
+            "INSERT INTO Projects (user_id, project_name) 
+             VALUES ($1, $2)
+             RETURNING user_id, project_id, project_name",
+        id,
+        body.project_name)
+        .fetch_one(&data.0)
+        .await;
+
+
+    let project = match insert_query {
+        Ok(data) => json!(data),
+        Err(e) => {
+            return HttpResponse::InternalServerError()
+                .json(json!({"status": "error","message": format!("{:?}", e)}));
+        }
+    };
+
+    return HttpResponse::Created().json(project);
+}
+
 
