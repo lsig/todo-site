@@ -15,6 +15,9 @@ async fn ping() -> impl Responder {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenv().expect(".env not found");
+
+    println!("Starting up...");
+    std::thread::sleep(std::time::Duration::from_secs(2));
     
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let pool = match PgPoolOptions::new()

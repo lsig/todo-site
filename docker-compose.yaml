@@ -21,3 +21,13 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:80"
+  todo_backend:
+    build: ./backend
+    image: todo-app
+    container_name: todo_api
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - db
