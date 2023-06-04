@@ -2,24 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo</title>
-    <link rel="stylesheet" href="src/style.css" />
-    <script type="module" src="src/app.js" defer></script>
+    <title>Vite + React + TS</title>
   </head>
   <body>
-    <header
-      class="text-3xl text-neutral-200 flex justify-center bg-blue-600 p-6 font-mono"
-    >
-      Remind-Me-Now
-    </header>
-    <div id="container" class="flex h-max">
-      <aside id="sidebar" class="basis-1/4 p-6 bg-blue-500">
-        <div class="project">Inbox</div>
-        <div class="project">Project1</div>
-        <div class="project">Project2</div>
-      </aside>
-      <div id="todos"></div>
-    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
