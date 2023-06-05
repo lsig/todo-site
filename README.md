@@ -71,16 +71,6 @@ Login user
 
 <br>
 
-Login user
-
-    POST :8080/api/v1/login
-    body : {
-        username: str
-        password: str
-    }
-
-<br>
-
 ### Projects
 
 View all projects for a specific user
@@ -98,12 +88,18 @@ View project by id for a specific user
 Create project for specific user
 
     POST /api/v1/users/{user_id}/projects
+    body : {
+        project_name: str
+    }
 
 <br>
 
 Update project by id for a specific user
 
     PATCH /api/v1/users/{user_id}/projects/{project_id}
+    body : {
+        ?project_name: str
+    }
 
 <br>
 
@@ -130,12 +126,26 @@ Get todo by id in a specific project for a specific user
 Create todo in a specific project for a specific user
 
     POST /api/v1/users/{user_id}/projects/{project_id}/todos
+    body : {
+        title: str,
+        ?description: str,
+        priority: int,
+        ?completed: bool,
+        ?due_date: date,
+    }
 
 <br>
 
 Update todo by id in a specific project for a specific user
 
     PATCH /api/v1/users/{user_id}/projects/{project_id}/todos/{todo_id}
+    body : {
+        ?title: str,
+        ?description: str,
+        ?priority: int,
+        ?completed: bool,
+        ?due_date: date,
+    }
 
 <br>
 
