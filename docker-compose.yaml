@@ -8,8 +8,8 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       POSTGRES_DB: todo_database
-    # volumes:
-    #   - ./data:/var/lib/postgresql/data
+    volumes:
+      - ./data:/var/lib/postgresql/data
     ports:
       - "6432:5432"
 
