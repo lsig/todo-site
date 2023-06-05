@@ -1,6 +1,5 @@
 target
 data
-data
 Dockerfile
 .dockerignore
 .git

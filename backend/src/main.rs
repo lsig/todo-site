@@ -17,8 +17,7 @@ async fn main() -> std::io::Result<()> {
     dotenv().expect(".env not found");
 
     println!("Starting up...");
-    std::thread::sleep(std::time::Duration::from_secs(2));
-    
+    std::thread::sleep(std::time::Duration::from_secs(4));
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let pool = match PgPoolOptions::new()
         .max_connections(5)
@@ -34,11 +33,15 @@ async fn main() -> std::io::Result<()> {
             }
     };
 
-    let _migration = match sqlx::migrate!().run(&pool).await{
+    println!("Migrating...");
+    let _migration = match sqlx::migrate!("./migrations").run(&pool).await{
         Ok(_mig) => println!("Migration succesful"),
         Err(_) => println!("Migration failed")
     }; 
 
+    std::thread::sleep(std::time::Duration::from_secs(2));
+
+    println!("...Server started");
     HttpServer::new(move || {
         App::new()
             .service(ping)

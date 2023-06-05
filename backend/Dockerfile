@@ -9,7 +9,7 @@ RUN echo "fn main() {}" > ./src/main.rs
 # Copy only the Cargo.toml and Cargo.lock files first
 COPY Cargo.toml Cargo.lock ./
 
-# # Build the dependencies separately to leverage Docker's caching mechanism
+# Build the dependencies separately to leverage Docker's caching mechanism
 RUN cargo build --release --locked
 
 # Copy the rest of the source code
