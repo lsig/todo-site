@@ -28,7 +28,7 @@ CREATE TABLE
     title VARCHAR(50) NOT NULL,
     description VARCHAR(100),
     priority INT NOT NULL,
-    CHECK (priority BETWEEN 1 AND 5),
+    CHECK (priority BETWEEN 1 AND 3),
     completed BOOLEAN DEFAULT false,
     due_date DATE,
     project_id INT NOT NULL,
@@ -85,7 +85,7 @@ VALUES
   (
     'Task 3',
     'Complete task 3',
-    4,
+    3,
     false,
     '2023-06-05',
     2,
