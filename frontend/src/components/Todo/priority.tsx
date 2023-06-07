@@ -14,15 +14,15 @@ export function PriorityBtn({ priority }: Priority) {
 
   switch (priority) {
     case PRIORITY.Low:
-      buttonColor = "bg-green-300 text-green-400";
+      buttonColor = "bg-green-300 text-green-500";
       priorityText = "Low";
       break;
     case PRIORITY.Medium:
-      buttonColor = "bg-yellow-300 text-yellow-400";
+      buttonColor = "bg-yellow-300 text-yellow-500";
       priorityText = "Medium";
       break;
     case PRIORITY.High:
-      buttonColor = "bg-red-300 text-red-400";
+      buttonColor = "bg-red-300 text-red-500";
       priorityText = "High";
       break;
     default:
@@ -30,7 +30,7 @@ export function PriorityBtn({ priority }: Priority) {
   }
   return (
     <button
-      className={`rounded-lg w-28 h-10 ${buttonColor} disabled:opacity-100`}
+      className={`rounded-lg w-28 h-10 ${buttonColor} disabled:opacity-100 sm:w-20 sm:h-6 sm:text-xs md:w-24 md:h-8 md:text-sm lg:w-28 lg:h-10`}
     >
       {priorityText}
     </button>
