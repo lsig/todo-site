@@ -6,19 +6,15 @@ import { EditBtn } from "./components/Todo/edit";
 import { DueDate } from "./components/Todo/date";
 import { Checkbox } from "./components/Todo/checkbox";
 import { Todo } from "./components/Todo/todo";
+import { NewTaskBtn } from "./components/ProjectOverview/NewTask";
+import { ProjectHeader } from "./components/ProjectOverview/header";
+import { ProjectOverview } from "./components/ProjectOverview/projectOverview";
 
 function App() {
   return (
     <>
-      <PriorityBtn priority={3} />
-      <DetailsBtn />
-      <TrashBtn onClick={() => {}} />
-      <EditBtn onClick={() => {}} />
       <br />
-      <DueDate dueDate="2023-12-24" />
-      <Checkbox label="Clean bathroom" values={{ projectId: 5, todoId: 7 }} />
-      <br />
-      <Todo />
+      <ProjectOverview />
     </>
   );
 }
