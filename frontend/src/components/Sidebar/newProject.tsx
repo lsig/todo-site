@@ -23,11 +23,15 @@ export function NewProjectBtn({ userId, fetchProjects }: NewProjectProps) {
 
   const createNewProject = async () => {
     try {
+      if (!projectName) {
+        return alert("Project must have a name");
+      }
       const res = await axios.post(`/users/${userId}/projects`, {
         project_name: projectName,
       });
       console.log(res.data);
       fetchProjects();
+      setProjectName("");
       closeDialog();
     } catch (e) {
       console.error("Error creating project", e);
