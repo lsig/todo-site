@@ -20,8 +20,16 @@ export function Todo() {
         <DetailsBtn />
       </div>
       <div className="flex gap-5 pr-8">
-        <EditBtn onClick={() => {}} />
-        <TrashBtn onClick={() => {}} />
+        <EditBtn
+          onClick={() => {
+            console.log("editing now");
+          }}
+        />
+        <TrashBtn
+          onClick={() => {
+            console.log("throwing in trash now");
+          }}
+        />
       </div>
     </div>
   );

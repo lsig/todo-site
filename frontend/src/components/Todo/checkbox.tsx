@@ -9,6 +9,7 @@ type CheckboxProps = {
 };
 
 export function Checkbox({ label, values }: CheckboxProps) {
+  console.log(values);
   const [checked, setChecked] = useState(false);
 
   const handleChange = () => setChecked((prevChecked) => !prevChecked);

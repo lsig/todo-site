@@ -27,9 +27,13 @@ For our database we used a [Postgresql](https://www.postgresql.org/) Docker imag
 
 ## Setting up
 
-To run our project, you are required to have docker set up and running on your system. If you are reading this, you likely have docker already setup, but in case you don't, here is [the official docker website](https://www.docker.com/get-started/). Try it out, it's really cool.
+To run our database and backend, you are required to have docker set up and running on your system. If you are reading this, you likely have docker already setup, but in case you don't, here is [the official docker website](https://www.docker.com/get-started/). Try it out, it's really cool.
 
-When you have docker setup and running, simply go to this directory and type in a terminal `docker-compose up`. This command will run the _docker-compose.yaml_ file in the same directory, which will boot up the entire system for you. Now you should be able to go to the frontend port, which we haven't decided on yet, and start todo-ing:)
+When you have docker setup and running, simply go to this directory and type in a terminal `docker-compose up`. This command will run the _docker-compose.yaml_ file in the same directory, which will boot up the entire backend + database for you.
+
+To load up the frontend, you are required to have [node](https://nodejs.org/en) and [npm](https://www.npmjs.com/), node's package manager. Go into the _/frontend_ directory and run in a terminal `npm install`, which will install all necessary packages for the frontend to run. Afterwards, you can run `npm run dev`, which will run the todo-site in development mode, or you can run `npm run build && npm run preview` to preview the todo-site in production mode. They should be identical.
+
+Now you can go ahead and try todoing, just don't get lost in the fun!
 
 ## Backend Endpoints
 
