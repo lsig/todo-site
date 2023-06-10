@@ -8,6 +8,7 @@
 // import { Todo } from "./components/Todo/todo";
 // import { NewTaskBtn } from "./components/ProjectOverview/NewTask";
 // import { ProjectHeader } from "./components/ProjectOverview/header";
+import { Header } from "./components/Header/header";
 import { ProjectOverview } from "./components/ProjectOverview/projectOverview";
 // import { NewProjectBtn } from "./components/Sidebar/newProject";
 // import { Project } from "./components/Sidebar/project";
@@ -16,9 +17,12 @@ import { Sidebar } from "./components/Sidebar/sidebar";
 
 function App() {
   return (
-    <div className="flex">
-      <Sidebar />
-      <ProjectOverview />
+    <div className="bg-gray-800">
+      <Header />
+      <div className="flex">
+        <Sidebar />
+        <ProjectOverview />
+      </div>
     </div>
   );
 }
