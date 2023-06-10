@@ -1,3 +1,4 @@
+use actix_cors::Cors;
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 use dotenvy::dotenv;
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
@@ -44,6 +45,7 @@ async fn main() -> std::io::Result<()> {
     println!("...Server started");
     HttpServer::new(move || {
         App::new()
+            .wrap(Cors::permissive())
             .service(ping)
             .service(routes::users::login_user)
             .service(routes::users::get_users)
