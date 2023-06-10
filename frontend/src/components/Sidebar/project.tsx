@@ -1,7 +1,20 @@
 import { X } from "react-feather";
 
-export function Project() {
+interface ProjectProps {
+  userId: number;
+  projectId: number;
+  projectName: string;
+  onDelete: () => void;
+}
+
+export function Project({
+  userId,
+  projectId,
+  projectName,
+  onDelete,
+}: ProjectProps) {
   // TODO: Window pops up when project is pressed
+
   return (
     <div
       className={
@@ -9,8 +22,8 @@ export function Project() {
       }
     >
       <div className="ml-8"></div>
-      <div className="self-center ">Project</div>
-      <X className="self-center mr-2" />
+      <div className="self-center ">{projectName}</div>
+      <X className="self-center mr-2" onClick={onDelete} />
     </div>
   );
 }
