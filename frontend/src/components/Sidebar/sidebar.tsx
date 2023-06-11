@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Project } from "./project";
 import { SidebarHeader } from "./sidebarHeader";
+import { IProject } from "../../utils";
 
 interface User {
   userId: number;
@@ -9,14 +10,8 @@ interface User {
   onSidebarClick: (projectId: number) => void;
 }
 
-interface Project {
-  project_id: number;
-  user_id: number;
-  project_name: string;
-}
-
 export function Sidebar({ userId, homeId, onSidebarClick }: User) {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<IProject[]>([]);
 
   useEffect(() => {
     fetchProjects();
@@ -51,6 +46,7 @@ export function Sidebar({ userId, homeId, onSidebarClick }: User) {
       <SidebarHeader
         userId={userId}
         homeId={homeId}
+        projects={projects}
         fetchProjects={fetchProjects}
         onSidebarClick={onSidebarClick}
       />
