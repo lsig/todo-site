@@ -1,8 +1,10 @@
+import axios from "axios";
 import { useState } from "react";
 
 type CheckboxProps = {
   label: string;
   values: {
+    userId: number;
     projectId: number;
     todoId: number;
   };
@@ -12,7 +14,25 @@ export function Checkbox({ label, values }: CheckboxProps) {
   console.log("checkbox value: ", values);
   const [checked, setChecked] = useState(false);
 
-  const handleChange = () => setChecked((prevChecked) => !prevChecked);
+  const patchTodoCheckbox = async (prevChecked: boolean) => {
+    try {
+      const res = await axios.patch(
+        `/users/${values.userId}/projects/${values.projectId}/todos/${values.todoId}`,
+        {
+          completed: !prevChecked,
+        }
+      );
+      console.log(res.data);
+    } catch (e) {
+      console.error("Error creating todo", e);
+    }
+  };
+
+  const handleChange = () =>
+    setChecked((prevChecked) => {
+      patchTodoCheckbox(prevChecked);
+      return !prevChecked;
+    });
 
   // TODO: Patch todo when check box is clicked, completed == true
   // need the values attribute for the patch request

@@ -14,7 +14,6 @@ export function ProjectOverview({
   projectId,
   projectName,
 }: ProjectOverviewProps) {
-  // TODO: Need to add Todos automatically
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {

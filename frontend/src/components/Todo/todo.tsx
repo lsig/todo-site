@@ -33,7 +33,7 @@ export function Todo({
       <div className="flex gap-5 pl-10">
         <Checkbox
           label={title}
-          values={{ projectId: projectId, todoId: todoId }}
+          values={{ userId: userId, projectId: projectId, todoId: todoId }}
         />
         <DueDate dueDate={dueDate} />
       </div>
@@ -44,7 +44,7 @@ export function Todo({
           description={description}
           dueDate={dueDate}
           priority={priority}
-          completed=completed
+          completed={completed}
         />
       </div>
       <div className="flex gap-5 pr-8">
