@@ -5,6 +5,7 @@ import { SidebarHeader } from "./sidebarHeader";
 
 interface User {
   userId: number;
+  onSidebarClick: (projectId: number) => void;
 }
 
 export function Sidebar({ userId }: User) {
@@ -45,6 +46,7 @@ export function Sidebar({ userId }: User) {
           projectId={project.project_id}
           projectName={project.project_name}
           onDelete={() => handleProjectDelete(project.project_id)}
+          onClick={() => onSidebarClick(project.project_id)}
         />
       ))}
     </div>

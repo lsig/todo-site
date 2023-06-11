@@ -5,6 +5,7 @@ interface ProjectProps {
   projectId: number;
   projectName: string;
   onDelete: () => void;
+  onSiderbarClick: () => void;
 }
 
 export function Project({
@@ -12,6 +13,7 @@ export function Project({
   projectId,
   projectName,
   onDelete,
+  onSiderbarClick,
 }: ProjectProps) {
   // TODO: Window pops up when project is pressed
 
@@ -22,7 +24,9 @@ export function Project({
       }
     >
       <div className="ml-8"></div>
-      <div className="self-center ">{projectName}</div>
+      <div className="self-center" onClick={onSiderbarClick}>
+        {projectName}
+      </div>
       <X className="self-center mr-2" onClick={onDelete} />
     </div>
   );
