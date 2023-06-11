@@ -19,7 +19,7 @@ export function Sidebar({ userId, onSidebarClick }: User) {
     try {
       const res = await axios.get(`/users/${userId}/projects`);
       setProjects(res.data);
-      console.log(res.data);
+      console.log("projects: ", res.data);
     } catch (e) {
       console.error("Error fetching projects", e);
     }
@@ -37,7 +37,10 @@ export function Sidebar({ userId, onSidebarClick }: User) {
   };
 
   return (
-    <div className="flex-1 flex flex-col w-80 px-4 py-2 bg-gray-700 rounded-2xl m-4 sm:min-h-[555px] md:min-h-[655px] lg:min-h-[700px]">
+    <div
+      id="sidebar"
+      className="flex-1 flex flex-col w-80 px-4 py-2 bg-gray-700 rounded-2xl m-4 sm:min-h-[555px] md:min-h-[655px] lg:min-h-[700px]"
+    >
       <SidebarHeader userId={userId} fetchProjects={fetchProjects} />
       {projects.map((project) => (
         <Project
@@ -46,7 +49,7 @@ export function Sidebar({ userId, onSidebarClick }: User) {
           projectId={project.project_id}
           projectName={project.project_name}
           onDelete={() => handleProjectDelete(project.project_id)}
-          onClick={() => onSidebarClick(project.project_id)}
+          onSiderbarClick={() => onSidebarClick(project.project_id)}
         />
       ))}
     </div>

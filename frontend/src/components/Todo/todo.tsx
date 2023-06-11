@@ -18,14 +18,14 @@ interface TodoProps {
 }
 
 export function Todo({
-  userId,
+  // userId,
   projectId,
   todoId,
   title,
-  description,
+  // description,
   dueDate,
   priority,
-  completed,
+  // completed,
   onDelete,
 }: TodoProps) {
   return (

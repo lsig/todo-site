@@ -16,16 +16,16 @@ import { ProjectOverview } from "./components/ProjectOverview/projectOverview";
 // import { SidebarHeader } from "./components/Sidebar/sidebarHeader";
 import { Sidebar } from "./components/Sidebar/sidebar";
 import { useEffect, useState } from "react";
+// import { createHome, getHomeProjectId } from "./utils";
 import { createHome } from "./utils";
 
 axios.defaults.baseURL = "http://localhost:8080/api/v1";
 const user = 1;
 
-localStorage.setItem("user", "1");
-
 function App() {
   const [homeId, setHomeId] = useState(0);
   const [selectedProject, setSelectedProject] = useState(0);
+  const [selectedProjectName, setSelectedProjectName] = useState("");
 
   useEffect(() => {
     createHome(user)
@@ -36,7 +36,7 @@ function App() {
       .catch((error) => {
         console.error("Error fetching home ID:", error);
       });
-  }, [user]);
+  }, []);
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -46,7 +46,8 @@ function App() {
         );
         // Update the necessary state or perform actions with the data
         setSelectedProject(res.data.project_id);
-        console.log(selectedProject);
+        setSelectedProjectName(res.data.project_name);
+        console.log("selected project 1: ", selectedProject);
       } catch (error) {
         console.error("Error fetching project data", error);
       }
@@ -56,7 +57,7 @@ function App() {
 
   const handleSiderbarClick = (projectId: number) => {
     setSelectedProject(projectId);
-    console.log(selectedProject);
+    console.log("selected project: ", selectedProject);
   };
 
   return (
@@ -64,7 +65,11 @@ function App() {
       <Header />
       <div className="flex">
         <Sidebar userId={user} onSidebarClick={handleSiderbarClick} />
-        <ProjectOverview userId={user} projectId={selectedProject} />
+        <ProjectOverview
+          userId={user}
+          projectId={selectedProject}
+          projectName={selectedProjectName}
+        />
       </div>
     </div>
   );

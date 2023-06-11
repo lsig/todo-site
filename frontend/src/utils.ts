@@ -8,13 +8,14 @@ interface IProject {
 
 export const createHome = async (userId: number) => {
   try {
-    let res = await axios.get(`/users/${userId}/projects`);
+    const res = await axios.get(`/users/${userId}/projects`);
     const data = res.data;
-    const home = data.find(
+    const home: IProject = data.find(
       (project: IProject) => project.project_name === "Home"
     );
+    console.log("home is:", home);
 
-    if (!home) {
+    if (home === undefined) {
       const createRes = await axios.post(`/users/${userId}/projects`, {
         project_name: "Home",
       });
