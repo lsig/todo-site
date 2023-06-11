@@ -11,6 +11,10 @@ Hi, welcome to todo-site. This is a revolutionary todo site tailored for the fut
 
 Our Todo app consists of a frontend, backend and database. We decided against choosing the default tech-stack (flask), and instead wanted to get a bit more creative, as we enjoy learning new technologies and making our app our own.
 
+## E\R Diagram
+![project1](https://github.com/lsig/todo-site/assets/89947902/a397b8d3-6c22-44b6-bb38-2fabb79c0519)
+
+
 ### Frontend
 
 For our frontend, we decided to choose the popular [reactjs](https://react.dev/) framework built on [javascript](https://developer.mozilla.org/en-US/docs/Glossary/JavaScript), which we run with [vitejs](https://vitejs.dev/). However, instead of using regular javascript, we chose to go with [typescript](https://www.typescriptlang.org/), as it provides a much better developer experience with more robust code.
