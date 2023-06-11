@@ -1,0 +1,27 @@
+# Ignore development-specific files and directories
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Ignore build artifacts and output files
+dist
+build
+out
+
+# Ignore source control directories
+.git
+.svn
+.CVS
+
+# Ignore editor-specific files
+.vscode
+.idea
+*.swp
+*.swo
+*.bak
+*.d
+
+# Ignore Docker-specific files
+Dockerfile
+.dockerignore

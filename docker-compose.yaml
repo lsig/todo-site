@@ -23,3 +23,14 @@ services:
 
     depends_on:
       - db
+
+  todo_frontend:
+    build: ./frontend
+    image: todo-app-front
+    container_name: todo_front
+
+    ports:
+      - "5173:5173"
+
+    depends_on:
+      - todo_backend
