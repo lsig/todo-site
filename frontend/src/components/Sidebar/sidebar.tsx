@@ -8,7 +8,7 @@ interface User {
   onSidebarClick: (projectId: number) => void;
 }
 
-export function Sidebar({ userId }: User) {
+export function Sidebar({ userId, onSidebarClick }: User) {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function Sidebar({ userId }: User) {
   };
 
   return (
-    <div className="flex flex-col w-80 px-4 py-2 bg-gray-700 rounded-2xl m-4 sm:min-h-[555px] md:min-h-[655px] lg:min-h-[700px]">
+    <div className="flex-1 flex flex-col w-80 px-4 py-2 bg-gray-700 rounded-2xl m-4 sm:min-h-[555px] md:min-h-[655px] lg:min-h-[700px]">
       <SidebarHeader userId={userId} fetchProjects={fetchProjects} />
       {projects.map((project) => (
         <Project
