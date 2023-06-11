@@ -56,35 +56,37 @@ export function NewProjectBtn({ userId, fetchProjects }: NewProjectProps) {
         New Project +
       </button>
       {isOpen && (
-        <dialog
-          open
-          className="fixed z-50 inset-0 flex flex-col justify-center bg-gray-600 rounded-lg"
-        >
-          <div className="flex justify-between text-purple-300">
-            <div className="ml-6"></div>
-            <h2>New Project</h2>
-            <X onClick={closeDialog} />
-          </div>
-
-          <div className="p-2">
-            <label htmlFor="projectName" className="p-1 text-purple-300">
-              Project Name:
-            </label>
-            <input
-              type="text"
-              id="projectName"
-              placeholder="Project name..."
-              className="p-1"
-              onChange={handleProjectNameChange}
-            />
-          </div>
-          <button
-            onClick={createNewProject}
-            className="rounded-lg bg-purple-500 text-purple-100 border border-purple-400"
+        <div className="fixed top-0 left-0 w-screen h-screen bg-gray-500 opacity-95">
+          <dialog
+            open
+            className="fixed z-50 inset-0 flex flex-col justify-center bg-gray-600 rounded-lg"
           >
-            Submit
-          </button>
-        </dialog>
+            <div className="flex justify-between text-purple-300">
+              <div className="ml-6"></div>
+              <h2>New Project</h2>
+              <X onClick={closeDialog} />
+            </div>
+
+            <div className="p-2">
+              <label htmlFor="projectName" className="p-1 text-purple-300">
+                Project Name:
+              </label>
+              <input
+                type="text"
+                id="projectName"
+                placeholder="Project name..."
+                className="p-1"
+                onChange={handleProjectNameChange}
+              />
+            </div>
+            <button
+              onClick={createNewProject}
+              className="rounded-lg bg-purple-500 text-purple-100 border border-purple-400"
+            >
+              Submit
+            </button>
+          </dialog>
+        </div>
       )}
     </>
     // </div>

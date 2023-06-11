@@ -19,8 +19,6 @@ export function ProjectOverview({
   todos,
   setTodos,
 }: ProjectOverviewProps) {
-  // TODO: Need to add Todos automatically
-
   useEffect(() => {
     fetchTodos();
   }, [projectId]);
@@ -69,6 +67,7 @@ export function ProjectOverview({
           priority={todo.priority}
           completed={todo.completed}
           onDelete={() => handleTodoDelete(todo.todo_id)}
+          fetchTodos={fetchTodos}
         />
       ))}
     </div>

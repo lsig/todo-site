@@ -7,11 +7,13 @@ export interface IProject {
 }
 
 export interface ITodo {
+  user_id: number;
+  project_id: number;
   todo_id: number;
   project_id: number;
   user_id: number;
   title: string;
-  description: string | null;
+  description: string;
   priority: number;
   completed: boolean;
   due_date: string; // might be / should be of type Date??
