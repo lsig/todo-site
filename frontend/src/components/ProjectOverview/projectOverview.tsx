@@ -35,7 +35,9 @@ export function ProjectOverview({
 
   const handleTodoDelete = async (todoId: number) => {
     try {
-      await axios.delete(`/users/${userId}/projects/${projectId}/${todoId}`);
+      await axios.delete(
+        `/users/${userId}/projects/${projectId}/todos/${todoId}`
+      );
       // Perform any additional actions after successful deletion
       fetchTodos();
     } catch (error) {
