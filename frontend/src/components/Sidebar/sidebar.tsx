@@ -5,10 +5,11 @@ import { SidebarHeader } from "./sidebarHeader";
 
 interface User {
   userId: number;
+  homeId: number;
   onSidebarClick: (projectId: number) => void;
 }
 
-export function Sidebar({ userId, onSidebarClick }: User) {
+export function Sidebar({ userId, homeId, onSidebarClick }: User) {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -41,17 +42,25 @@ export function Sidebar({ userId, onSidebarClick }: User) {
       id="sidebar"
       className="flex-1 flex flex-col w-80 px-4 py-2 bg-gray-700 rounded-2xl m-4 sm:min-h-[555px] md:min-h-[655px] lg:min-h-[700px]"
     >
-      <SidebarHeader userId={userId} fetchProjects={fetchProjects} />
-      {projects.map((project) => (
-        <Project
-          key={project.project_id}
-          userId={project.user_id}
-          projectId={project.project_id}
-          projectName={project.project_name}
-          onDelete={() => handleProjectDelete(project.project_id)}
-          onSiderbarClick={() => onSidebarClick(project.project_id)}
-        />
-      ))}
+      <SidebarHeader
+        userId={userId}
+        homeId={homeId}
+        fetchProjects={fetchProjects}
+        onSidebarClick={onSidebarClick}
+      />
+      {projects.map(
+        (project) =>
+          project.project_id != homeId && (
+            <Project
+              key={project.project_id}
+              userId={project.user_id}
+              projectId={project.project_id}
+              projectName={project.project_name}
+              onDelete={() => handleProjectDelete(project.project_id)}
+              onSiderbarClick={() => onSidebarClick(project.project_id)}
+            />
+          )
+      )}
     </div>
   );
 }

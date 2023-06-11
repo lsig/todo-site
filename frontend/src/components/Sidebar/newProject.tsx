@@ -23,9 +23,11 @@ export function NewProjectBtn({ userId, fetchProjects }: NewProjectProps) {
 
   const createNewProject = async () => {
     try {
-      if (!projectName) {
-        return alert("Project must have a name");
-      }
+      if (!projectName) return alert("Project must have a name");
+
+      if (projectName.toLowerCase().trim() === "home")
+        return alert("You already have a Home project");
+
       const res = await axios.post(`/users/${userId}/projects`, {
         project_name: projectName,
       });
