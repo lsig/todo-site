@@ -64,7 +64,11 @@ function App() {
     <div className="bg-gray-800 h-full">
       <Header />
       <div className="flex">
-        <Sidebar userId={user} onSidebarClick={handleSiderbarClick} />
+        <Sidebar
+          userId={user}
+          homeId={homeId}
+          onSidebarClick={handleSiderbarClick}
+        />
         <ProjectOverview
           userId={user}
           projectId={selectedProject}
