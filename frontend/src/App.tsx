@@ -21,6 +21,8 @@ import { createHome } from "./utils";
 axios.defaults.baseURL = "http://localhost:8080/api/v1";
 const user = 1;
 
+localStorage.setItem("user", "1");
+
 function App() {
   const [homeId, setHomeId] = useState(null);
   const [selectedProject, setSelectedProject] = useState(0);
@@ -56,7 +58,7 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-800">
+    <div className="bg-gray-800 h-full">
       <Header />
       <div className="flex">
         <Sidebar userId={user} onSidebarClick={handleSiderbarClick} />

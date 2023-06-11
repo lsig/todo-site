@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body, #root, #app, #app>div {
+    height: 100%;
+    width: 100%;
+  }
+
+  /* body {
+    display: flex;
+  }
+
+  #root {
+    flex-grow: 1;
+  } */
