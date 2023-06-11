@@ -2,6 +2,7 @@ import { Todo } from "../Todo/todo";
 import axios from "axios";
 import { ProjectHeader } from "./header";
 import { useEffect, useState } from "react";
+import { ITodo } from "../../utils";
 
 interface ProjectOverviewProps {
   userId: number;
@@ -14,7 +15,7 @@ export function ProjectOverview({
   projectId,
   projectName,
 }: ProjectOverviewProps) {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<ITodo[]>([]);
 
   useEffect(() => {
     fetchTodos();
