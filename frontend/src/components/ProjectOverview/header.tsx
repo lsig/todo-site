@@ -1,16 +1,27 @@
 import { NewTaskBtn } from "./NewTask";
 
-interface ProjectName {
+interface ProjectHeaderProps {
   name: string;
+  userId: number;
+  projectId: number;
+  fetchTodos: () => Promise<void>;
 }
-export function ProjectHeader({ name }: ProjectName) {
-  //TODO: Change Bathroom to projectName prop
+export function ProjectHeader({
+  name,
+  userId,
+  projectId,
+  fetchTodos,
+}: ProjectHeaderProps) {
   return (
     <div className="flex flex-wrap w-11/12 self-center justify-between border-solid border-b-4 border-purple-200">
       <h2 className="mt-2 text-purple-200 text-4xl font-bold sm:text-3xl md:text-4xl lg:text-4xl">
-        {name || "select a project"}
+        {name}
       </h2>
-      <NewTaskBtn />
+      <NewTaskBtn
+        userId={userId}
+        projectId={projectId}
+        fetchTodos={fetchTodos}
+      />
     </div>
   );
 }

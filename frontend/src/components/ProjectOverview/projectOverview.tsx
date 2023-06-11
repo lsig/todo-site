@@ -48,7 +48,12 @@ export function ProjectOverview({
 
   return (
     <div className="flex flex-col h-5/6 w-3/4 p-5 m-4 bg-gray-700 rounded-3xl sm:min-h-[555px] md:min-h-[655px] lg:min-h-[700px]">
-      <ProjectHeader name={projectName} />
+      <ProjectHeader
+        name={projectName}
+        userId={userId}
+        projectId={projectId}
+        fetchTodos={fetchTodos}
+      />
       {todos.map((todo) => (
         <Todo
           key={todo.todo_id}

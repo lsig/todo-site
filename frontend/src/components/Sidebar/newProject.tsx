@@ -8,8 +8,6 @@ interface NewProjectProps {
 }
 
 export function NewProjectBtn({ userId, fetchProjects }: NewProjectProps) {
-  // TODO: Window pops up when new task is pressed
-
   const [isOpen, setIsOpen] = useState(false);
   const [projectName, setProjectName] = useState("");
 

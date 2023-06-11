@@ -1,7 +1,10 @@
 import { Calendar } from "react-feather";
 import { format, parseISO } from "date-fns";
 
-function formatDate(dateString: string) {
+function formatDate(dateString: string | null) {
+  if (!dateString) {
+    return "";
+  }
   const date = parseISO(dateString);
   const formattedDate = format(date, "do MMM");
   return formattedDate;
