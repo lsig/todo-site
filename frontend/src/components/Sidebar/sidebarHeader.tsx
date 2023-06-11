@@ -1,4 +1,4 @@
-import { IProject } from "../../utils";
+import { IProject, ITodo } from "../../utils";
 import { HomeBtn } from "./home";
 import { NewProjectBtn } from "./newProject";
 import { WeekBtn } from "./thisWeek";
@@ -10,6 +10,8 @@ interface HeaderProps {
   projects: IProject[];
   fetchProjects: () => void;
   onSidebarClick: (projectId: number) => void;
+  setTodos: (todos: ITodo[]) => void;
+  setSelectedProjectName: (pname: string) => void;
 }
 
 export function SidebarHeader({
@@ -18,6 +20,8 @@ export function SidebarHeader({
   projects,
   fetchProjects,
   onSidebarClick,
+  setTodos,
+  setSelectedProjectName,
 }: HeaderProps) {
   return (
     <div className="flex flex-col w-64 my-3 self-center">
@@ -25,8 +29,18 @@ export function SidebarHeader({
       <div className="flex flex-col gap-2 py-3 border-solid border-y-4 border-grey-200">
         <NewProjectBtn userId={userId} fetchProjects={fetchProjects} />
         <HomeBtn homeId={homeId} onSidebarClick={onSidebarClick} />
-        <TodayBtn userId={userId} projects={projects} />
-        <WeekBtn userId={userId} projects={projects} />
+        <TodayBtn
+          userId={userId}
+          projects={projects}
+          setTodos={setTodos}
+          setSelectedProjectName={setSelectedProjectName}
+        />
+        <WeekBtn
+          userId={userId}
+          projects={projects}
+          setTodos={setTodos}
+          setSelectedProjectName={setSelectedProjectName}
+        />
       </div>
     </div>
   );

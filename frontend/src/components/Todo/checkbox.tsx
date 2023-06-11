@@ -11,7 +11,7 @@ type CheckboxProps = {
 };
 
 export function Checkbox({ label, values }: CheckboxProps) {
-  console.log("checkbox value: ", values);
+  // console.log("checkbox value: ", values);
   const [checked, setChecked] = useState(false);
 
   const patchTodoCheckbox = async (prevChecked: boolean) => {
