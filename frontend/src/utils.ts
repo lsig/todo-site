@@ -8,6 +8,8 @@ export interface IProject {
 
 export interface ITodo {
   todo_id: number;
+  project_id: number;
+  user_id: number;
   title: string;
   description: string | null;
   priority: number;
@@ -22,7 +24,6 @@ export const createHome = async (userId: number) => {
     const home: IProject = data.find(
       (project: IProject) => project.project_name === "Home"
     );
-    console.log("home is:", home);
 
     if (home === undefined) {
       const createRes = await axios.post(`/users/${userId}/projects`, {

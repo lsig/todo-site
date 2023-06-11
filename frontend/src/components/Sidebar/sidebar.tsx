@@ -2,15 +2,23 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Project } from "./project";
 import { SidebarHeader } from "./sidebarHeader";
-import { IProject } from "../../utils";
+import { IProject, ITodo } from "../../utils";
 
 interface User {
   userId: number;
   homeId: number;
   onSidebarClick: (projectId: number) => void;
+  setTodos: (todos: ITodo[]) => void;
+  setSelectedProjectName: (pname: string) => void;
 }
 
-export function Sidebar({ userId, homeId, onSidebarClick }: User) {
+export function Sidebar({
+  userId,
+  homeId,
+  onSidebarClick,
+  setTodos,
+  setSelectedProjectName,
+}: User) {
   const [projects, setProjects] = useState<IProject[]>([]);
 
   useEffect(() => {
@@ -49,6 +57,8 @@ export function Sidebar({ userId, homeId, onSidebarClick }: User) {
         projects={projects}
         fetchProjects={fetchProjects}
         onSidebarClick={onSidebarClick}
+        setTodos={setTodos}
+        setSelectedProjectName={setSelectedProjectName}
       />
       {projects.map(
         (project) =>

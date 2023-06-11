@@ -2,20 +2,24 @@ import { Todo } from "../Todo/todo";
 import axios from "axios";
 import { ProjectHeader } from "./header";
 import { useEffect, useState } from "react";
+import { ITodo } from "../../utils";
 
 interface ProjectOverviewProps {
   userId: number;
   projectId: number;
   projectName: string;
+  todos: ITodo[];
+  setTodos: (todos: ITodo[]) => void;
 }
 
 export function ProjectOverview({
   userId,
   projectId,
   projectName,
+  todos,
+  setTodos,
 }: ProjectOverviewProps) {
   // TODO: Need to add Todos automatically
-  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     fetchTodos();
@@ -27,7 +31,6 @@ export function ProjectOverview({
         `/users/${userId}/projects/${projectId}/todos`
       );
       setTodos(res.data);
-      console.log("todos: ", res.data);
     } catch (e) {
       console.error("Error fetching projects", e);
     }
@@ -61,7 +64,7 @@ export function ProjectOverview({
           projectId={todo.project_id}
           todoId={todo.todo_id}
           title={todo.title}
-          description={todo.description}
+          description={todo.description || ""}
           dueDate={todo.due_date}
           priority={todo.priority}
           completed={todo.completed}
