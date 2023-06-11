@@ -34,9 +34,6 @@ export function Checkbox({ label, values }: CheckboxProps) {
       return !prevChecked;
     });
 
-  // TODO: Patch todo when check box is clicked, completed == true
-  // need the values attribute for the patch request
-
   return (
     <label className="flex gap-2 text-purple-500 self-center sm:scale-75 md:scale-90 lg:scale-100">
       <input
