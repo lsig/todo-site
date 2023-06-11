@@ -18,14 +18,14 @@ interface TodoProps {
 }
 
 export function Todo({
-  // userId,
+  userId,
   projectId,
   todoId,
   title,
-  // description,
+  description,
   dueDate,
   priority,
-  // completed,
+  completed,
   onDelete,
 }: TodoProps) {
   return (
@@ -39,7 +39,13 @@ export function Todo({
       </div>
       <div className="flex self-center gap-5">
         <PriorityBtn priority={priority} />
-        <DetailsBtn />
+        <DetailsBtn
+          title={title}
+          description={description}
+          dueDate={dueDate}
+          priority={priority}
+          completed=completed
+        />
       </div>
       <div className="flex gap-5 pr-8">
         <EditBtn
