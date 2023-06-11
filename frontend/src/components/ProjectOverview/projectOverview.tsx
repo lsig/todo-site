@@ -14,7 +14,7 @@ export function ProjectOverview({ userId, projectId }: ProjectOverviewProps) {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, [projectId]);
 
   const fetchTodos = async () => {
     try {

@@ -24,7 +24,7 @@ const user = 1;
 localStorage.setItem("user", "1");
 
 function App() {
-  const [homeId, setHomeId] = useState(null);
+  const [homeId, setHomeId] = useState(0);
   const [selectedProject, setSelectedProject] = useState(0);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ function App() {
         );
         // Update the necessary state or perform actions with the data
         setSelectedProject(res.data.project_id);
+        console.log(selectedProject);
       } catch (error) {
         console.error("Error fetching project data", error);
       }
@@ -55,6 +56,7 @@ function App() {
 
   const handleSiderbarClick = (projectId: number) => {
     setSelectedProject(projectId);
+    console.log(selectedProject);
   };
 
   return (
