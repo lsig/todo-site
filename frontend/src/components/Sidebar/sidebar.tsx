@@ -9,8 +9,14 @@ interface User {
   onSidebarClick: (projectId: number) => void;
 }
 
+interface Project {
+  project_id: number;
+  user_id: number;
+  project_name: string;
+}
+
 export function Sidebar({ userId, homeId, onSidebarClick }: User) {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     fetchProjects();
