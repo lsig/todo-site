@@ -15,6 +15,7 @@ interface TodoProps {
   priority: number;
   completed: boolean;
   onDelete: () => void;
+  fetchTodos: () => Promise<void>;
 }
 
 export function Todo({
@@ -27,6 +28,7 @@ export function Todo({
   priority,
   completed,
   onDelete,
+  fetchTodos,
 }: TodoProps) {
   return (
     <div className="flex h-20 w-11/12 mt-8 gap-2 self-center justify-between bg-purple-300 rounded-3xl">
@@ -49,9 +51,14 @@ export function Todo({
       </div>
       <div className="flex gap-5 pr-8">
         <EditBtn
-          onClick={() => {
-            console.log("editing now");
-          }}
+          userId={userId}
+          projectId={projectId}
+          todoId={todoId}
+          title={title}
+          description={description}
+          dueDate={dueDate}
+          priority={priority}
+          fetchTodos={fetchTodos}
         />
         <TrashBtn onClick={onDelete} />
       </div>

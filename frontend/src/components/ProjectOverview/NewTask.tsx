@@ -92,7 +92,7 @@ export function NewTaskBtn({ userId, projectId, fetchTodos }: NewTaskProps) {
           >
             <div className="flex justify-between text-purple-300">
               <div className="ml-6"></div>
-              <h2>New Project</h2>
+              <h2>New Task</h2>
               <X onClick={closeDialog} />
             </div>
 

@@ -65,6 +65,7 @@ export function ProjectOverview({
           priority={todo.priority}
           completed={todo.completed}
           onDelete={() => handleTodoDelete(todo.todo_id)}
+          fetchTodos={fetchTodos}
         />
       ))}
     </div>
