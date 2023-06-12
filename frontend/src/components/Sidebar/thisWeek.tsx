@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { IProject, ITodo, isWithinCurrentWeek } from "../../utils";
 import { SideBarBtn } from "./sidebarButton";
 import axios from "axios";

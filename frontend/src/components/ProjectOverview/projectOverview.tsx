@@ -1,7 +1,7 @@
 import { Todo } from "../Todo/todo";
 import axios from "axios";
 import { ProjectHeader } from "./header";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ITodo } from "../../utils";
 
 interface ProjectOverviewProps {

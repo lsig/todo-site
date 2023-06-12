@@ -86,7 +86,8 @@ export function EditBtn({
         <Edit2 size={24} />
       </button>
       {isOpen && (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-gray-500 opacity-95">
+        <>
+          <div className="fixed top-0 left-0 w-screen h-screen bg-gray-800 opacity-60"></div>
           <dialog
             open
             className="fixed z-50 inset-0 flex flex-col justify-center bg-gray-600 rounded-lg"
@@ -144,7 +145,7 @@ export function EditBtn({
               Submit
             </button>
           </dialog>
-        </div>
+        </>
       )}
     </>
   );

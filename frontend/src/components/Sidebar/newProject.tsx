@@ -43,20 +43,18 @@ export function NewProjectBtn({ userId, fetchProjects }: NewProjectProps) {
   };
 
   return (
-    // <div className="">
     <>
       <button
         onClick={openDialog}
         className={
-          "rounded-lg w-64 h-12 self-center bg-purple-200 text-purple-500 disabled:opacity-100 " +
-          // "sm:w-56 sm:h-8 sm:mb-1 sm:text-xs md:w-60 md:h-10 md:mb-2 md:text-base lg:w-64 lg:h-12 lg:mb-3 lg:text-base" +
-          ""
+          "rounded-lg w-64 h-12 self-center bg-purple-200 text-purple-500 disabled:opacity-100 "
         }
       >
         New Project +
       </button>
       {isOpen && (
-        <div className="fixed top-0 left-0 w-screen h-screen bg-gray-500 opacity-95">
+        <>
+          <div className="fixed top-0 left-0 w-screen h-screen bg-gray-800 opacity-60"></div>
           <dialog
             open
             className="fixed z-50 inset-0 flex flex-col justify-center bg-gray-600 rounded-lg"
@@ -86,7 +84,7 @@ export function NewProjectBtn({ userId, fetchProjects }: NewProjectProps) {
               Submit
             </button>
           </dialog>
-        </div>
+        </>
       )}
     </>
     // </div>

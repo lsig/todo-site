@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 
 enum Priority {
   Low = 1,
@@ -12,12 +12,6 @@ interface RangeProps {
 }
 
 export function RangeInputWithLabels({ value, handleChange }: RangeProps) {
-  // const [value, setValue] = useState(1);
-
-  // const handleRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setValue(parseInt(e.target.value));
-  // };
-
   const getLabel = () => {
     switch (value) {
       case Priority.Low:
