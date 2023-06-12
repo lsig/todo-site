@@ -45,7 +45,6 @@ function App() {
 
   const handleSiderbarClick = (projectId: number) => {
     setSelectedProject(projectId);
-    console.log("selected project: ", selectedProject);
   };
 
   return (

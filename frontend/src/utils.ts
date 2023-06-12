@@ -10,8 +10,6 @@ export interface ITodo {
   user_id: number;
   project_id: number;
   todo_id: number;
-  project_id: number;
-  user_id: number;
   title: string;
   description: string;
   priority: number;
@@ -56,7 +54,7 @@ export const isWithinCurrentWeek = (date: string | Date): boolean => {
   const compareDate = new Date(date);
 
   // Calculate the difference in days between compareDate and the next Monday
-  const daysUntilNextMonday = (1 + 7 - today.getDay()) % 7;
+  const daysUntilNextMonday = (7 - today.getDay()) % 7;
 
   // Calculate the difference in days between compareDate and today
   const diffDays = Math.floor(

@@ -18,30 +18,32 @@ export function WeekBtn({
   setSelectedProject,
   setSelectedProjectName,
 }: Week) {
-  // const [clicked, setClicked] = useState<boolean>(false);
-
   const fetchThisWeeksTodos = async () => {
     const todos: ITodo[] = [];
     setSelectedProject(-1); // -1 means not a project selected, but a time filter.
     setSelectedProjectName("Due This Week");
 
-    projects.forEach((project) => {
-      console.log("project name: ", project.project_name);
-      axios
-        .get(`/users/${userId}/projects/${project.project_id}/todos`)
-        .then((response) => {
-          const projectsTodos: ITodo[] = response.data;
-          projectsTodos.forEach((todo) => {
-            if (isWithinCurrentWeek(todo.due_date)) {
-              todos.push(todo);
-            }
-          });
-        })
-        .catch((error) => {
-          console.error(error);
+    const axiosPromises = projects.map((project) =>
+      axios.get(`/users/${userId}/projects/${project.project_id}/todos`)
+    );
+
+    try {
+      const responses = await Promise.all(axiosPromises); // waits for all calls to the backend.
+
+      responses.forEach((response) => {
+        const projectsTodos: ITodo[] = response.data;
+
+        projectsTodos.forEach((todo) => {
+          if (isWithinCurrentWeek(todo.due_date)) {
+            todos.push(todo);
+          }
         });
-    });
-    setTodos(todos);
+      });
+
+      setTodos(todos);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return <SideBarBtn name="This Week" onClick={fetchThisWeeksTodos} />;

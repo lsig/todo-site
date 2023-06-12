@@ -31,7 +31,6 @@ export function Sidebar({
     try {
       const res = await axios.get(`/users/${userId}/projects`);
       setProjects(res.data);
-      console.log("projects: ", res.data);
     } catch (e) {
       console.error("Error fetching projects", e);
     }

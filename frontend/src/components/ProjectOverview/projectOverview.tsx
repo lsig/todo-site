@@ -24,6 +24,7 @@ export function ProjectOverview({
   }, [projectId]);
 
   const fetchTodos = async () => {
+    if (projectId === -1) return; // we should not fetch the todos, as we don't have a specific project.
     try {
       const res = await axios.get(
         `/users/${userId}/projects/${projectId}/todos`
@@ -35,6 +36,10 @@ export function ProjectOverview({
   };
 
   const handleTodoDelete = async (todoId: number) => {
+    if (projectId === -1) {
+      alert("not implemented error");
+      return;
+    }
     try {
       await axios.delete(
         `/users/${userId}/projects/${projectId}/todos/${todoId}`
