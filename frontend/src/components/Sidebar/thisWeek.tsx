@@ -7,6 +7,7 @@ interface Week {
   userId: number;
   projects: IProject[];
   setTodos: (todos: ITodo[]) => void;
+  setSelectedProject: (pid: number) => void;
   setSelectedProjectName: (pname: string) => void;
 }
 
@@ -14,17 +15,14 @@ export function WeekBtn({
   userId,
   projects,
   setTodos,
+  setSelectedProject,
   setSelectedProjectName,
 }: Week) {
-  // TODO: Window pops up when this week is pressed
-  const [clicked, setClicked] = useState<boolean>(false);
-
-  useEffect(() => {
-    fetchThisWeeksTodos();
-  }, [clicked]);
+  // const [clicked, setClicked] = useState<boolean>(false);
 
   const fetchThisWeeksTodos = async () => {
     const todos: ITodo[] = [];
+    setSelectedProject(-1); // -1 means not a project selected, but a time filter.
     setSelectedProjectName("Due This Week");
 
     projects.forEach((project) => {

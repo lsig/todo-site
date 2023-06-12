@@ -9,6 +9,7 @@ interface User {
   homeId: number;
   onSidebarClick: (projectId: number) => void;
   setTodos: (todos: ITodo[]) => void;
+  setSelectedProject: (projectId: number) => void;
   setSelectedProjectName: (pname: string) => void;
 }
 
@@ -17,6 +18,7 @@ export function Sidebar({
   homeId,
   onSidebarClick,
   setTodos,
+  setSelectedProject,
   setSelectedProjectName,
 }: User) {
   const [projects, setProjects] = useState<IProject[]>([]);
@@ -58,6 +60,7 @@ export function Sidebar({
         fetchProjects={fetchProjects}
         onSidebarClick={onSidebarClick}
         setTodos={setTodos}
+        setSelectedProject={setSelectedProject}
         setSelectedProjectName={setSelectedProjectName}
       />
       {projects.map(

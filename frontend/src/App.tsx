@@ -14,6 +14,7 @@ function App() {
   const [selectedProjectName, setSelectedProjectName] = useState<string>("");
   const [todos, setTodos] = useState<ITodo[]>([]);
 
+  // BUG this should probably not be inside useEffect, as it should only be run once and never again under any circumstances.
   useEffect(() => {
     createHome(user)
       .then((homeId) => {
@@ -26,6 +27,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (selectedProject == -1) return; // In this case, we have not selected a project, but a time filter. We do not want to get todos by the project id.
     const fetchProjectData = async () => {
       try {
         const res = await axios.get(
@@ -55,6 +57,7 @@ function App() {
           homeId={homeId}
           onSidebarClick={handleSiderbarClick}
           setTodos={setTodos}
+          setSelectedProject={setSelectedProject}
           setSelectedProjectName={setSelectedProjectName}
         />
         <ProjectOverview
