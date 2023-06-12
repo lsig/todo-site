@@ -79,7 +79,7 @@ export function NewTaskBtn({ userId, projectId, fetchTodos }: NewTaskProps) {
       <button
         onClick={openDialog}
         className={
-          "rounded-lg w-32 h-12 mb-3 self-center bg-purple-200 text-purple-500 disabled:opacity-100"
+          "rounded-lg w-32 h-12 self-center bg-purple-200 text-purple-500 disabled:opacity-100"
         }
       >
         New Task +

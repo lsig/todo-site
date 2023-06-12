@@ -62,5 +62,5 @@ export const isWithinCurrentWeek = (date: string | Date): boolean => {
   );
 
   // Check if compareDate is within the current week
-  return diffDays >= 0 && diffDays <= daysUntilNextMonday;
+  return diffDays >= -1 && diffDays <= daysUntilNextMonday;
 };
