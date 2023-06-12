@@ -17,7 +17,6 @@ export function TodayBtn({
   setSelectedProject,
   setSelectedProjectName,
 }: Today) {
-  // console.log(userId, projects);
   const fetchTodaysTodos = async () => {
     const todos: ITodo[] = [];
     setSelectedProject(-1); // -1 means not a project selected, but a time filter.
@@ -46,6 +45,5 @@ export function TodayBtn({
     }
   };
 
-  // TODO: Window pops up when today is pressed
   return <SideBarBtn name="Today" onClick={fetchTodaysTodos} />;
 }

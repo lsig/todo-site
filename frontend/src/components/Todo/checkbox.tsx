@@ -11,7 +11,6 @@ type CheckboxProps = {
 };
 
 export function Checkbox({ label, values }: CheckboxProps) {
-  // console.log("checkbox value: ", values);
   const [checked, setChecked] = useState(false);
 
   const patchTodoCheckbox = async (prevChecked: boolean) => {
@@ -22,7 +21,6 @@ export function Checkbox({ label, values }: CheckboxProps) {
           completed: !prevChecked,
         }
       );
-      console.log(res.data);
     } catch (e) {
       console.error("Error creating todo", e);
     }

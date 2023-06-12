@@ -72,7 +72,6 @@ export function EditBtn({
           priority: todoPriority,
         }
       );
-      console.log("patched todo: ", res.data);
       fetchTodos();
       closeDialog();
     } catch (e) {

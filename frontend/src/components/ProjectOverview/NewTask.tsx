@@ -61,7 +61,6 @@ export function NewTaskBtn({ userId, projectId, fetchTodos }: NewTaskProps) {
           completed: completed,
         }
       );
-      console.log("new todo created: ", res.data);
       fetchTodos();
       setTodoName("");
       setTodoDescription(null);

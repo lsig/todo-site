@@ -29,7 +29,6 @@ export function NewProjectBtn({ userId, fetchProjects }: NewProjectProps) {
       const res = await axios.post(`/users/${userId}/projects`, {
         project_name: projectName,
       });
-      console.log("new project created: ", res.data);
       fetchProjects();
       setProjectName("");
       closeDialog();
@@ -87,6 +86,5 @@ export function NewProjectBtn({ userId, fetchProjects }: NewProjectProps) {
         </>
       )}
     </>
-    // </div>
   );
 }
